@@ -3,6 +3,20 @@ import { NgModule } from '@angular/core';
 
 //Modulos
 import { AppRoutingModule } from './app.routing.module';
+import { FormsModule } from '@angular/forms';
+
+//NGrx
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+//Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+//environments
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -28,9 +42,19 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     NavbarComponent,
     SidebarComponent
   ],
-  imports: [
+  imports: [//todo lo que termine con Module va en los imports
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    AngularFireModule,//estos ultimos tres son de angularfire2. recuerda instalar npm install firebase @angular/fire --save y actualizar los environments
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

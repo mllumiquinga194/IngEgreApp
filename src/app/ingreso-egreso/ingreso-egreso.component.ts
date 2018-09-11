@@ -10,6 +10,8 @@ export class IngresoEgresoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('ingreso-egreso.component.ts Cargado');
+
   }
 
 }

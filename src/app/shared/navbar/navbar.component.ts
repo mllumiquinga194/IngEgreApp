@@ -10,6 +10,7 @@ export class NavbarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('navbar.component.ts Cargado');    
   }
 
 }

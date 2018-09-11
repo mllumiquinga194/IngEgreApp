@@ -10,6 +10,8 @@ export class DetalleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('detalle.component.ts Cargado');
+
   }
 
 }

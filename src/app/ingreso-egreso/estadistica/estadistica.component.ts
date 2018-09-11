@@ -10,6 +10,8 @@ export class EstadisticaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('estadistica.component.ts Cargado');
+
   }
 
 }
