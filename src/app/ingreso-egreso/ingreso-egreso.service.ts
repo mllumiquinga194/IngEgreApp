@@ -6,7 +6,7 @@ import { _sanitizeHtml } from '@angular/core/src/sanitization/html_sanitizer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { filter, map } from 'rxjs/operators';
-import { SetItemsAction } from './ingreso-egreso.action';
+import { SetItemsAction, UnSetItemsAction } from './ingreso-egreso.action';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class IngresoEgresoService {
   ingresoEgresoItemsSubscription: Subscription = new Subscription();
 
   constructor(private afDB: AngularFirestore,//para grabar en la base de datos firebase
-    public _authService: AuthService,
-    private store: Store<AppState>) { }
+              public _authService: AuthService,
+              private store: Store<AppState>) { }
 
   //
   initIngresoEgresoListener() {
@@ -45,17 +45,17 @@ export class IngresoEgresoService {
                   map( docData => {
                     //este map es el de javascript que me permite transformar cada uno de los elementos que se encuentran dentro del arreglo de javascript
                     return docData.map( doc => {//doc hace referencia a cada uno de los documentos que estan en el arreglo
-                      return {//el operador map me va a transformar todos los elementos que recibo y me va a extraer unicamente el uid. para traerme la propia data utilizo la funcion data que esta en el arreglo data()
+                      return {//el operador map me va a transformar todos los elementos que recibo y me va a extraer unicamente el uid. para traerme la propia data utilizo la funcion data que esta en el arreglo. data()
                         uid: doc.payload.doc.id,
-                        ...doc.payload.doc.data() //con esta funcion me traigo la data real que necesito. al usar el operador spread, como esto viene en pared de valores va a asignar la descripcion con su valor, monto con su valor, tipo con su valor.
+                        ...doc.payload.doc.data() //con esta funcion me traigo la data real que necesito. al usar el operador spread, como esto viene en pares de valores va a asignar la descripcion con su valor, monto con su valor, tipo con su valor.
                       };
                     });
                   })
                 )
                 //.valueChanges()//valueChanges() retorna el observable a donde yo me puedo subscribir. observable que se va a encargar de trabajar con los socket de firebase
-                .subscribe( ( coleccion: any ) => {//docData son todos los elementos que hasta ahora tengo en items
+                .subscribe( ( coleccion: any ) => {//coleccion son todos los elementos que hasta ahora tengo en items
                   // console.log(coleccion);
-                  this.store.dispatch( new SetItemsAction( coleccion ));
+                  this.store.dispatch( new SetItemsAction( coleccion ));//guardo en mi store
                 });
   }
 
@@ -63,6 +63,7 @@ export class IngresoEgresoService {
     
     this.ingresoEgresoListenerSubscription.unsubscribe();
     this.ingresoEgresoItemsSubscription.unsubscribe();
+    this.store.dispatch( new UnSetItemsAction() );
   }
 
   crearIngresoEgreso(ingresoEgreso: IngresoEgreso) {//desde nuestro modelo
@@ -76,6 +77,14 @@ export class IngresoEgresoService {
     // .then()
     // .catch( err => console.log(err)
     // );
+  }
+
+  borrarIngresoEgreso( uid: string){
+
+    const user = this._authService.getUsuario();
+
+    //para borar de la base de datos
+    return this.afDB.doc(`${ user.uid }/ingresos-egresos/items/${ uid }`).delete();
   }
 
 }

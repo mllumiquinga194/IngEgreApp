@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import { User } from './user.model';
 
 import { ActivarLoadingAction, DesactivarLoadingAction } from '../shared/ui.actions';
-import { SetUserAction } from './auth.action';
+import { SetUserAction, UnsetUserAction } from './auth.action';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -111,10 +111,13 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
     this.afAuth.auth.signOut();
+
+    this.store.dispatch( new UnsetUserAction() );//para vaciar mi estado y no dejar informacion una vez cerrada la sesion
   }
 
+  //en auth-guard.service se llama a esta funcion para verificar que el usuario este logeado y asi proteger las rutas
   isAuth() {
     // hasta aqui regresaria un observable pero el canActive espera en verdadero o false. lo pasamos por pipe para transformarlo. El operador map me va a permitir tener la respuesta fbUser y procesarla.
     return this.afAuth.authState //hasta aqui devuelve en observable como lo vemos en this.afAuth.authState.subscribe((fbUser: firebase.User) (linea 20 si es que no se modifica mas)

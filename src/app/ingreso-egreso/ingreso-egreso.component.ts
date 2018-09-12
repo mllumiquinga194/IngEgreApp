@@ -16,21 +16,21 @@ import { ActivarLoadingAction, DesactivarLoadingAction } from '../shared/ui.acti
 export class IngresoEgresoComponent implements OnInit, OnDestroy {
 
   forma: FormGroup;//formulario
-  tipo = 'ingreso';//para saber si es ingreso o egreso.
+  tipo = 'Ingreso';//para saber si es ingreso o egreso.
   loadingSubs: Subscription = new Subscription();//para mostrarlo cuando cargue el ingreso-egreso
   cargando: boolean;
 
   constructor(public _ingresoEgresoService: IngresoEgresoService,
-    private store: Store<AppState>) { }
+              private store: Store<AppState>) { }
 
   ngOnInit() {
     console.log('ingreso-egreso.component.ts Cargado');
 
     this.loadingSubs = this.store.select('ui').subscribe(ui => this.cargando = ui.isLoading);
 
-    this.forma = new FormGroup({
+    this.forma =     new FormGroup({
       'descripcion': new FormControl('', Validators.required),
-      'monto': new FormControl('0', Validators.min(1))
+      'monto':       new FormControl('', Validators.min(1))
     });
   }
 

@@ -15,6 +15,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+//Grafica
+import { ChartsModule } from 'ng2-charts';
+
 //environments
 import { environment } from '../environments/environment';
 
@@ -28,6 +31,7 @@ import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { OrdenIngresoEgresoPipe } from './ingreso-egreso/orden-ingreso-egreso.pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     DetalleComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrdenIngresoEgresoPipe
   ],
   imports: [//todo lo que termine con Module va en los imports
     BrowserModule,
@@ -50,6 +55,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     AngularFireModule,//estos ultimos tres son de angularfire2. recuerda instalar npm install firebase @angular/fire --save y actualizar los environments
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ChartsModule,
     AngularFireModule.initializeApp(environment.firebase),
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({

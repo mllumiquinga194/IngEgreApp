@@ -10,6 +10,7 @@ export class AuthGuardService implements CanActivate {
   constructor( public _authService: AuthService) { }
 
   //espera que yo retorne un boolean, una promesa o un observable.
+  //esta funcion se ejecuta en el app.routing.module.ts y me ayuda a proteger mis rutas
   canActivate(){
 
     return this._authService.isAuth();//esta funcion esta en el servicio AuthService y la uso para validar si el usuario esta logeado.
