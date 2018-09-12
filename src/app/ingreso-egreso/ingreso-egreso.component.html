@@ -1,57 +1,53 @@
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Agregar Ingreso / Egreso</h4>
-            <p class="card-description">
-              Especifique el monto y el tipo
-            </p>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Agregar Ingreso / Egreso</h4>
+        <p class="card-description">
+          Especifique el monto y el tipo
+        </p>
 
-            <form>
-              
-              <div class="form-group">
-                <label>Descripción</label>
-                <input type="text" 
-                       class="form-control" 
-                       placeholder="Descripción"
-                       name="descripcion">
-              </div>
+        <!-- [formGroup]="forma" para asociar el formulario de mi template con el formulario de mi componente. -->
+        <!-- formControlName="descripcion" para asiciar los input -->
+        <form (ngSubmit)="crearIngresoEgreso()" [formGroup]="forma">
 
-              <div class="form-group">
-                  <label>Monto</label>
-                  <input type="number" 
-                         class="form-control" 
-                         placeholder="Monto"
-                         name="monto">
-                    <p>
-                      Debe de ser un monto positivo
-                    </p>
-                </div>
-
-              <div class="form-group">
-                  <label>Tipo</label>
-                  <br>
-                  <button type="button" class="btn btn-primary btn-block">Ingreso</button>
-                  <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
-              </div>
-
-              <hr>
-              <button type="button" class="btn btn-success mr-2">
-                <i class="fa fa-save"></i>
-                Agregar
-              </button>
-
-              <!-- 
-                <button disabled class="btn btn-success mr-2">
-                  <i class="fa fa-spin fa-sync"></i>
-                  Espere por favor...
-                </button> 
-              -->
-              
-              <button type="reset" class="btn btn-light">Cancelar</button>
-
-            </form>
+          <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" class="form-control" placeholder="Descripción" formControlName="descripcion" name="descripcion">
           </div>
-        </div>
+
+          <div class="form-group">
+            <label>Monto</label>
+            <input type="number" class="form-control" placeholder="Monto" formControlName="monto" name="monto">
+            <p>
+              Debe de ser un monto positivo
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo</label>
+            <br>
+            <button (click)="tipo = 'egreso'" *ngIf="tipo === 'ingreso'" type="button" class="btn btn-primary btn-block">Ingreso</button>
+            <button (click)="tipo = 'ingreso'" *ngIf="tipo === 'egreso'" type="button" class="btn btn-warning btn-block">Egreso</button>
+          </div>
+
+          <hr>
+          <button *ngIf="!cargando" [disabled]="forma.invalid" type="submit" class="btn btn-success mr-2">
+            <i class="fa fa-save"></i>
+            Agregar
+          </button>
+
+
+          <button *ngIf="cargando" disabled class="btn btn-success mr-2">
+            <i class="fa fa-spin fa-sync"></i>
+            Espere por favor...
+          </button>
+
+
+          <button type="reset" class="btn btn-light">Cancelar</button>
+
+        </form>
       </div>
+    </div>
+  </div>
 </div>
