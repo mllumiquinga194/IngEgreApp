@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 //Modulos
 import { AppRoutingModule } from './app.routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //NGrx
 import { StoreModule } from '@ngrx/store';
@@ -13,49 +12,25 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 //Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-
-//Grafica
-import { ChartsModule } from 'ng2-charts';
 
 //environments
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { IngresoEgresoComponent } from './ingreso-egreso/ingreso-egreso.component';
-import { EstadisticaComponent } from './ingreso-egreso/estadistica/estadistica.component';
-import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { OrdenIngresoEgresoPipe } from './ingreso-egreso/orden-ingreso-egreso.pipe';
+
+//Modulos Personalizados
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    IngresoEgresoComponent,
-    EstadisticaComponent,
-    DetalleComponent,
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
-    OrdenIngresoEgresoPipe
   ],
   imports: [//todo lo que termine con Module va en los imports
     BrowserModule,
+    AuthModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     AngularFireModule,//estos ultimos tres son de angularfire2. recuerda instalar npm install firebase @angular/fire --save y actualizar los environments
     AngularFirestoreModule,
-    AngularFireAuthModule,
-    ChartsModule,
     AngularFireModule.initializeApp(environment.firebase),
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
