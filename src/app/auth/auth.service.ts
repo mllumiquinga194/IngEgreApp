@@ -32,6 +32,7 @@ export class AuthService {
               private afDB: AngularFirestore, //para escribir en la base de datos
               private store: Store<AppState>) {
   }
+  
   // este metodo se va a encargar de escuchar el estado del usuario
   initAuthListener() {
     this.afAuth.authState.subscribe((fbUser: firebase.User) => {//fbUser: firebase.User aplico las interfaces de firebase.
@@ -65,7 +66,7 @@ export class AuthService {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password).then(resp => {
 
       //guardar el usuario creado en la base de datos FIREBASE
-      const user: User = {//creo un objeto tipo usuario
+      const user: User = {//creo un objeto tipo usuario. o sea , de mi modelo.
         uid: resp.user.uid,
         nombre,
         email: resp.user.email
@@ -74,12 +75,13 @@ export class AuthService {
       //this.afDB grabo en la base de datos con un string construido
       // con ${ user.uid } quiero que cree en firebase un documento que tenga como primera llave el uid del usuario. luego le mando lo que va en el segundo nivel del documento
       this.afDB.doc(`${user.uid}/usuario`)
-        //con set, le mando la inforamcion que va en el segundo nivel, en este caso le mando el usuario. sus datos. si ya hay algio, se reemplaza
+        //con set, le mando la inforamcion que va en el segundo nivel, en este caso le mando el usuario. sus datos. si ya hay algo, se reemplaza
         //esto regresa una promesa
         .set(user)
         .then(() => {
           //si todo lo hase correctamente, navego hasta el dashboard
           this.router.navigate(['/']);
+
           //cuando el usuario ya se autenticó y se creo el registro en la base de datos, desactivo el loading
           this.store.dispatch(new DesactivarLoadingAction());
 

@@ -3,6 +3,8 @@ import { EstadisticaComponent } from "../ingreso-egreso/estadistica/estadistica.
 import { IngresoEgresoComponent } from "../ingreso-egreso/ingreso-egreso.component";
 import { DetalleComponent } from "../ingreso-egreso/detalle/detalle.component";
 
+
+//Definicion de las rutas hijas.
 export const dashboardRoutes: Routes = [
     { path: '', component: EstadisticaComponent},
     { path: 'ingreso-egreso', component: IngresoEgresoComponent},

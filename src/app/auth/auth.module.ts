@@ -4,7 +4,6 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
-// import { AppRoutingModule } from '../app.routing.module';
 import { RouterModule} from '@angular/router';
 
 @NgModule({
@@ -14,9 +13,9 @@ import { RouterModule} from '@angular/router';
         RegisterComponent
     ],
     imports: [
-        CommonModule,
-        FormsModule,
-        AngularFireAuthModule,
+        CommonModule, //ngIf y ngFor funcionan desde aqui
+        FormsModule, //para que funcione los formularios normales de angular
+        AngularFireAuthModule, //para el inicio de sesion con firebase
         RouterModule // tuve que importarlo para que me funcione el routerlink
     ]
 

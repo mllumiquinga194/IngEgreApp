@@ -18,6 +18,7 @@ import { RouterModule} from '@angular/router';
     SidebarComponent
   ],
   exports: [//ya que uso este modulo en el dashboard, entonces para que no me de error, los exporto.
+    //estoy usando elementos de estos modulos fuera de ellos entonces los exporto para que puedan ser usados fuera.
     FooterComponent,
     NavbarComponent,
     SidebarComponent
